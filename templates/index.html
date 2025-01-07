@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+{% load static %}
+
+<style>
+    .hero-image {
+        position: relative;
+        text-align: center;
+        color: white;
+        background-image: url('https://cdn.pixabay.com/photo/2021/10/11/04/08/university-6699377_1280.jpg');
+        background-size: cover;
+        background-position: center;
+        height: 700px;
+    }
+
+    .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.6);
+    }
+
+    .content-container {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+    }
+
+    .btn-primary {
+        background: linear-gradient(45deg, #007bff, #6c757d);
+        border: none;
+        font-size: 1.25rem;
+        padding: 10px 30px;
+    }
+
+    .btn-primary:hover {
+        background: linear-gradient(45deg, #0056b3, #495057);
+    }
+</style>
+
+<div class="hero-image">
+    <div class="overlay"></div>
+    <div class="content-container">
+        <div>
+            <h1 class="display-4 fw-bold">Welcome to Our Platform</h1>
+            <p class="lead">Unlock your potential with us. Please log in to continue.</p>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>
+        </div>
+    </div>
+</div>
+
+<!-- Login Modal -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-dark text-white">
+                <h5 class="modal-title" id="loginModalLabel">Login</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="{% url 'login'%}">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="login_email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="login_email" name="email" placeholder="Enter your email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="login_password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="login_password" name="password" placeholder="Enter your password" required>
+                    </div>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-success">Login</button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
