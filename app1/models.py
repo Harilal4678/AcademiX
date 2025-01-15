@@ -44,6 +44,7 @@ class marks(models.Model):
     maths=models.CharField(max_length=30)
     computer_science=models.CharField(max_length=30)
     lecturer=models.ForeignKey(staff,on_delete=models.CASCADE,null=True,blank=True)
+    exam_type=models.CharField(max_length=30,default='quarterly')
 
     def __str__(self):
         return f"{self.student.first_name}"

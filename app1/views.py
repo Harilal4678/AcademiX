@@ -214,11 +214,13 @@ def mark(request):
             physics=request.POST.get(f"physics_{student_id}") 
             maths=request.POST.get(f"maths_{student_id}")          
             computer_science=request.POST.get(f"computer_science_{student_id}")  
+            exam_type=request.POST.get('exam_type')
             mark=marks(
                 student=student,
                 physics=physics,
                 maths=maths,
-                computer_science=computer_science
+                computer_science=computer_science,
+                exam_type=exam_type
             )
             mark.save()
         return redirect('mark_success')

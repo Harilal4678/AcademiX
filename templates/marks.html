@@ -119,6 +119,18 @@
     footer a:hover {
         text-decoration: underline;
     }
+    .round{
+ 
+    background-color: #007bff; /* Button color */
+    color: white; /* Text color */
+    padding: 10px 20px; /* Padding to adjust size */
+    border: none; /* No border */
+    border-radius: 25px; /* Rounds the corners */
+    font-size: 16px; /* Font size */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s ease; /* Smooth transition on hover */
+}
+    
 </style>
 
 <body>
@@ -208,6 +220,12 @@
             });
         });
     </script>
+
+<div class="text-center mt-4">
+    <a href="{% url 'lecturedashboard' %}" class="btn-custom"><button class="round">back to dashboard</button></a>
+</div>
+
+
 
 </body>
 
