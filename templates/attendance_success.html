@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block title %}Attendance Confirmation{% endblock %}
+
+{% block content %}
+{% load static %}
+
+<!-- Bootstrap CSS (optional, can also use your local stylesheet) -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<!-- Custom Internal Styles -->
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f4f4f9;
+        margin-top: 20px;
+    }
+
+    .container {
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #ffffff;
+        border-radius: 8px;
+        padding: 30px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        font-size: 30px;
+        color: #28a745;
+    }
+
+    p {
+        text-align: center;
+        font-size: 18px;
+        margin-bottom: 30px;
+    }
+
+    a.btn-custom {
+        display: inline-block;
+        background-color: #007bff;
+        color: white;
+        padding: 12px 24px;
+        border-radius: 5px;
+        font-size: 18px;
+        text-align: center;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+    }
+
+    a.btn-custom:hover {
+        background-color: #0056b3;
+    }
+
+    .message-container {
+        text-align: center;
+    }
+</style>
+
+<body>
+    <div class="container message-container">
+        <h2>Attendance marked successfully!</h2>
+        <p>Your attendance has been recorded. You can go back to the dashboard now.</p>
+        <a href="{% url 'lecturedashboard' %}" class="btn-custom">Go to Dashboard</a>
+    </div>
+
+    <!-- Bootstrap JS & Popper.js (for Bootstrap's JS plugins) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+{% endblock %}

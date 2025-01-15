@@ -28,4 +28,13 @@ class staff(models.Model):
     
     def __str__(self):
         return self.fullname
+    
+class Attendance(models.Model):
+    student = models.ForeignKey(studentdetails, on_delete=models.CASCADE)
+    date = models.DateField()  # Date of attendance
+    status = models.CharField(max_length=10, choices=[('present', 'Present'), ('absent', 'Absent')])  # Attendance status
+    lecturer = models.ForeignKey(staff, on_delete=models.CASCADE, null=True, blank=True)  # The lecturer who took attendance
+
+    def __str__(self):
+        return f"{self.student.first_name} - {self.date} - {self.status}"
    

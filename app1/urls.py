@@ -12,5 +12,9 @@ urlpatterns=[
     path('clerkdashboard/',views.clerkdashboard,name='clerkdashboard'),
     path('lecturedashboard/',views.lecturedashboard,name='lecturedashboard'),
     path('labassistantdashboard',views.labassistantdashboard,name='labassistantdashboard'),
+    path('mark_attendance/', views.mark_attendance, name='mark_attendance'),
+    path('attendance_success/', views.attendance_success, name='attendance_success'),
+    path('view_attendance/', views.view_attendance, name='view_attendance'),
+
 
 ]

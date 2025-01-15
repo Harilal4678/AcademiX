@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+
+{% block title %}Mark Attendance{% endblock %}
+
+{% block content %}
+{% load static %}
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<!-- Custom Internal Styles -->
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f4f4f9;
+        margin-top: 20px;
+    }
+
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        background-color: #ffffff;
+        border-radius: 8px;
+        padding: 30px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: 28px;
+        color: #007bff;
+    }
+
+    label {
+        font-size: 16px;
+        margin-right: 10px;
+    }
+
+    .checkbox-group {
+        margin-bottom: 15px;
+    }
+
+    .select-status {
+        margin-left: 10px;
+    }
+
+    button {
+        background-color: #007bff;
+        color: white;
+        border-radius: 5px;
+        padding: 10px 20px;
+        border: none;
+        font-size: 16px;
+        cursor: pointer;
+        width: 100%;
+        transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+
+    .form-check {
+        margin-bottom: 15px;
+    }
+</style>
+
+<body>
+    <div class="container">
+        <form method="POST" action="{% url 'mark_attendance' %}">
+            {% csrf_token %}
+            
+            <h2>Mark Attendance</h2>
+
+            <div class="form-group">
+                <label for="date">Date:</label>
+                <input type="date" name="date" class="form-control" required>
+            </div>
+
+            {% for student in students %}
+            <div class="form-check checkbox-group">
+                <label class="form-check-label">
+                    <input type="checkbox" name="students" value="{{ student.id }}" class="form-check-input">
+                    {{ student.first_name }} {{ student.last_name }}
+                </label>
+                <select name="status_{{ student.id }}" class="form-control select-status">
+                    <option value="present">Present</option>
+                    <option value="absent">Absent</option>
+                </select>
+            </div>
+            {% endfor %}
+
+            <button type="submit">Submit Attendance</button>
+        </form>
+    </div>
+
+    <!-- Bootstrap JS & Popper.js (for Bootstrap's JS plugins) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+{% endblock %}

@@ -6,7 +6,97 @@
 
 {% load static %}
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clerk Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #34495e;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            padding: 20px;
+        }
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin: 15px;
+            width: 300px;
+            text-align: center;
+            padding: 20px;
+        }
+        .card h3 {
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+        .card button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .card button:hover {
+            background-color: #2980b9;
+        }
+        footer {
+            background-color: #34495e;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Clerk Dashboard</h1>
+    </header>
+    <div class="container">
+        <!-- Fees Section -->
+        <div class="card">
+            <h3>Check Fees</h3>
+            <p>View and manage student fee records.</p>
+            <button onclick="location.href='#'">View Fees</button>
+        </div>
+        <!-- Attendance Section -->
+        <div class="card">
+            <h3>Check Attendance</h3>
+            <p>Review attendance records of students.</p>
+            <a href="{% url 'view_attendance' %}">
+            <button>View Attendance</button></a>
+        </div>
+        <!-- Staff Section -->
+        <div class="card">
+            <h3>Check Staff</h3>
+            <p>Access details of all college staff.</p>
+            <button onclick="location.href='#'">View Staff</button>
+        </div>
+    </div>
+    <footer>
+        <p>&copy; 2025 College Management System</p>
+    </footer>
+</body>
+</html>
 
-<h1>welcome to clerk dashboard</h1>
 
 {% endblock %}

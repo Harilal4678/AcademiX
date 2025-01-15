@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+
+{% block title %}Attendance Records{% endblock %}
+
+{% block content %}
+{% load static %}
+
+<!-- Bootstrap CSS (optional, can also use your local stylesheet) -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<!-- Custom Internal Styles -->
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f4f4f9;
+        margin-top: 20px;
+    }
+
+    .container {
+        max-width: 900px;
+        margin: 0 auto;
+        background-color: #ffffff;
+        border-radius: 8px;
+        padding: 30px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: 28px;
+        color: #007bff;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #007bff;
+        color: white;
+        font-size: 18px;
+    }
+
+    td {
+        background-color: #f9f9f9;
+    }
+
+    tr:nth-child(even) td {
+        background-color: #f1f1f1;
+    }
+
+    tr:hover td {
+        background-color: #e2e6ea;
+    }
+
+    .btn-custom {
+        background-color: #007bff;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-size: 16px;
+        text-align: center;
+        display: inline-block;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-custom:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+<body>
+    <div class="container">
+        <h2>Attendance Records</h2>
+        
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Student Name</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>TEACHER</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for record in attendance %}
+                <tr>
+                    <td>{{ record.student.first_name }} {{ record.student.last_name }}</td>
+                    <td>{{ record.date }}</td>
+                    <td>{{ record.status }}</td>
+                    <td>{{record.lecturer}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+
+
+<!--         
+        {% if request.session.stid.department == 'lecturer' %}
+    <div class="text-center mt-4">
+        <a href="{% url 'lecturedashboard' %}" class="btn-custom">Back to Dashboard</a>
+    </div>
+{% else %}
+    <div class="text-center mt-4">
+        <a href="{% url 'clerkdashboard' %}" class="btn-custom">Back to Dashboard</a>
+    </div>
+{% endif %} -->
+
+
+
+    <!-- Bootstrap JS & Popper.js (for Bootstrap's JS plugins) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+{% endblock %}

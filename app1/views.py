@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from django.core.files.storage import FileSystemStorage
 from . models import *
+from django.utils import timezone
 
 # Create your views here.
 def index(request):
@@ -143,3 +144,48 @@ def lecturedashboard(request):
 def labassistantdashboard(request):
     return render(request,'labassistantdashboard.html')
             
+
+
+
+def mark_attendance(request):
+    if request.method == 'POST':
+        date = request.POST.get('date')  # Get the date of attendance
+        status = None
+        students = request.POST.getlist('students')  # List of selected student IDs
+        for student_id in students:
+            student = studentdetails.objects.get(id=student_id)
+            # Fetch the attendance status for each student
+            status = request.POST.get(f"status_{student_id}")  # Present or Absent
+            # Create attendance record
+            lecturer = staff.objects.get(id=request.session.get('stid'))  # The lecturer marking attendance
+            
+            attendance = Attendance(
+                student=student,
+                date=date,
+                status=status,
+                lecturer=lecturer,
+            )
+            attendance.save()
+
+        return redirect('attendance_success')  # Redirect to a success page or back to dashboard
+
+    # Get the list of students for the form
+    students = studentdetails.objects.all()
+    return render(request, 'attendance.html', {'students': students})
+
+def attendance_success(request):
+    return render(request, 'attendance_success.html')
+
+
+def view_attendance(request):
+    attendance = Attendance.objects.none()  # Default to an empty queryset
+
+    if 'sid' in request.session:  # Example condition: student logged in
+        student_id = request.session['sid']
+        attendance = Attendance.objects.filter(student_id=student_id)
+    else:
+        attendance = Attendance.objects.all()  # Default to all attendance records if no condition is met
+
+    return render(request, 'view_attendance.html', {'attendance': attendance})
+
+
