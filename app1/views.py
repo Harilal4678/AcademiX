@@ -186,6 +186,57 @@ def view_attendance(request):
     else:
         attendance = Attendance.objects.all()  # Default to all attendance records if no condition is met
 
-    return render(request, 'view_attendance.html', {'attendance': attendance})
 
+    
+    from_date = request.GET.get('from_date')
+    to_date = request.GET.get('to_date')
+
+    # Filter attendance records by date range
+    if from_date and to_date:
+        attendance = Attendance.objects.filter(date__range=[from_date, to_date])
+    else:
+        attendance = Attendance.objects.all()
+
+    context = {
+        'attendance': attendance
+    }
+    return render(request, 'view_attendance.html', context)
+
+
+
+    # return render(request, 'view_attendance.html', {'attendance': attendance})
+
+def mark(request):
+    if request.method == 'POST':
+        students=request.POST.getlist('students')
+        for student_id in students:
+            student=studentdetails.objects.get(id=student_id) 
+            physics=request.POST.get(f"physics_{student_id}") 
+            maths=request.POST.get(f"maths_{student_id}")          
+            computer_science=request.POST.get(f"computer_science_{student_id}")  
+            mark=marks(
+                student=student,
+                physics=physics,
+                maths=maths,
+                computer_science=computer_science
+            )
+            mark.save()
+        return redirect('mark_success')
+    students = studentdetails.objects.all()
+    return render(request, 'marks.html', {'students': students})
+
+def mark_success(request):
+    return render(request,'mark_success.html')
+
+def view_marks(request):
+    mark=marks.objects.none()
+    if 'sid' in request.session:  # Example condition: student logged in
+        student_id = request.session['sid']
+        mark = marks.objects.filter(student_id=student_id)
+    else:
+        mark=marks.objects.all()
+
+    
+    return render(request,'view_marks.html',{'mark':mark})
+    
 

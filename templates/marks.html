@@ -1,0 +1,214 @@
+{% extends 'base.html' %}
+
+{% block title %}Enter Marks{% endblock %}
+
+{% block content %}
+{% load static %}
+
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #0b0c0c;
+        padding: 20px;
+    }
+
+    .container {
+        max-width: 900px;
+        margin: 0 auto;
+        background-color: #ffffff;
+        border-radius: 10px;
+        padding: 30px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        font-size: 28px;
+        color: #2c3e50;
+        font-weight: bold;
+    }
+
+    .student-list {
+        margin-bottom: 20px;
+        max-height: 300px;
+        overflow-y: auto;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 15px;
+        background-color: #f9f9f9;
+    }
+
+    .student-list label {
+        display: block;
+        font-size: 16px;
+        margin-bottom: 10px;
+        cursor: pointer;
+    }
+
+    .student-list input[type="checkbox"] {
+        margin-right: 10px;
+    }
+
+    .marks-fields {
+        display: none;
+        margin-top: 20px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 15px;
+        background-color: #f9f9f9;
+    }
+
+    .marks-fields h5 {
+        color: #007bff;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .form-group label {
+        font-size: 16px;
+        font-weight: 500;
+        color: #495057;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        font-size: 16px;
+        padding: 10px 25px;
+        border-radius: 5px;
+        transition: all 0.3s ease-in-out;
+        width: 100%;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        color: white;
+        border: none;
+        font-size: 16px;
+        padding: 10px 25px;
+        border-radius: 5px;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .btn-secondary:hover {
+        background-color: #5a6268;
+    }
+
+    /* Footer Styling */
+    footer {
+        background-color: #f8f9fa;  /* Lighter background for footer */
+        padding: 20px;
+        text-align: center;
+        font-size: 14px;
+        color: #333;
+        margin-top: 30px;
+    }
+
+    footer a {
+        color: #007bff;
+        text-decoration: none;
+        margin: 0 10px;
+    }
+
+    footer a:hover {
+        text-decoration: underline;
+    }
+</style>
+
+<body>
+    <div class="container">
+        <h2>Enter Marks</h2>
+
+        <form method="POST" action="{% url 'mark' %}">
+            {% csrf_token %}
+
+            <!-- Select Students Section -->
+            <div class="student-list">
+                <label><strong>Select Students:</strong></label>
+                {% for student in students %}
+                <label>
+                    <input type="checkbox" class="student-checkbox" value="{{ student.id }}" name="students">
+                    {{ student.first_name }} {{ student.last_name }}
+                </label>
+                {% endfor %}
+            </div>
+
+            <!-- Exam Type Section -->
+            <div class="form-group">
+                <label for="exam_type"><strong>Exam Type:</strong></label>
+                <select name="exam_type" id="exam_type" class="form-control" required>
+                    <option value="quarterly">Quarterly</option>
+                    <option value="half_yearly">Half Yearly</option>
+                    <option value="final">Final</option>
+                    <option value="mid_term">Mid-Term</option>
+                </select>
+            </div>
+
+            <!-- Marks Fields -->
+            <div id="marks-fields-container" class="marks-fields">
+                <h5>Enter Marks:</h5>
+                <div id="marks-fields"></div>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-primary mt-3">Submit Marks</button>
+        </form>
+    </div>
+
+    <!-- Bootstrap JS & Popper.js -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- JavaScript for Dynamic Marks Input -->
+    <script>
+        const checkboxes = document.querySelectorAll('.student-checkbox');
+        const marksContainer = document.getElementById('marks-fields-container');
+        const marksFields = document.getElementById('marks-fields');
+
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', function () {
+                marksFields.innerHTML = ''; // Clear previous fields
+                let selectedStudents = Array.from(checkboxes)
+                    .filter(checkbox => checkbox.checked)
+                    .map(checkbox => ({
+                        id: checkbox.value,
+                        name: checkbox.parentElement.textContent.trim()
+                    }));
+
+                if (selectedStudents.length > 0) {
+                    marksContainer.style.display = 'block';
+                    selectedStudents.forEach(student => {
+                        const studentSection = `
+                            <div class="form-group">
+                                <label>${student.name} - Physics Marks:</label>
+                                <input type="number" name="physics_${student.id}" class="form-control" min="0" max="100" required>
+                            </div>
+                            <div class="form-group">
+                                <label>${student.name} - Maths Marks:</label>
+                                <input type="number" name="maths_${student.id}" class="form-control" min="0" max="100" required>
+                            </div>
+                            <div class="form-group">
+                                <label>${student.name} - Computer Science Marks:</label>
+                                <input type="number" name="computer_science_${student.id}" class="form-control" min="0" max="100" required>
+                            </div>
+                            <hr>
+                        `;
+                        marksFields.innerHTML += studentSection;
+                    });
+                } else {
+                    marksContainer.style.display = 'none';
+                }
+            });
+        });
+    </script>
+
+</body>
+
+{% endblock %}

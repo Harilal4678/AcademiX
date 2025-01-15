@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Home{% endblock %}
+{% block title %}Lecturer Dashboard{% endblock %}
 
 {% block content %}
 {% load static %}
@@ -12,19 +12,29 @@
 <style>
     body {
         font-family: 'Arial', sans-serif;
-        background-color: #f4f4f9;
-        margin-top: 20px;
+        background: url("{% static 'images/dark-background-abstract-with-light-effect-vector.jpg' %}") no-repeat center center fixed;
+        background-size: cover;
+        color: #fff;
+        margin: 0;
+        padding: 0;
     }
 
     header {
-        background-color: #007bff;
-        color: white;
-        padding: 20px;
+        background-color: rgba(105, 105, 105, 0.9); /* Grey color with slight transparency */
+        padding: 20px 0;
         text-align: center;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
     }
 
     header h1 {
-        font-size: 28px;
+        font-size: 32px;
+        font-weight: bold;
+        margin: 0;
+        color: #fff;
+    }
+
+    nav {
+        margin-top: 15px;
     }
 
     nav ul {
@@ -32,82 +42,124 @@
         padding: 0;
         display: flex;
         justify-content: center;
-        gap: 20px;
+        gap: 15px;
     }
 
     nav ul li {
-        display: inline;
+        display: inline-block;
     }
 
     nav ul li a {
         color: white;
         text-decoration: none;
         font-size: 18px;
-        padding: 10px 20px;
-        transition: background-color 0.3s ease;
+        padding: 10px 15px;
         border-radius: 5px;
+        transition: all 0.3s ease-in-out;
     }
 
     nav ul li a:hover {
-        background-color: #0056b3;
+        background-color: rgba(128, 128, 128, 0.8); /* Slightly darker grey on hover */
     }
 
-    main {
-        margin-top: 30px;
-        padding: 20px;
+    .main-content {
+        margin: 50px auto;
+        padding: 30px;
+        background-color: rgba(255, 255, 255, 0.9); /* White with transparency */
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        max-width: 900px;
+    }
+
+    .main-content h2 {
+        text-align: center;
+        margin-bottom: 30px;
+        color: #2c3e50;
+        font-size: 28px;
+    }
+
+    .btn-custom {
+        background-color: #007bff; /* Blue buttons */
+        color: white;
+        border-radius: 5px;
+        padding: 12px 20px;
+        font-size: 16px;
+        transition: background-color 0.3s ease-in-out;
+        text-decoration: none;
+    }
+
+    .btn-custom:hover {
+        background-color: #0056b3; /* Darker blue on hover */
     }
 
     .card {
-        border: 1px solid #ddd;
+        margin: 20px 0;
+        background-color: #f8f9fa;
+        border: none;
         border-radius: 8px;
-        margin-bottom: 30px;
-        padding: 15px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
 
     .card-header {
         font-size: 20px;
-        background-color: #f1f1f1;
-        padding: 10px 15px;
-        border-bottom: 1px solid #ddd;
+        background-color: #6c757d; /* Grey header */
+        color: white;
+        padding: 15px;
+        border-radius: 8px 8px 0 0;
     }
 
     .card-body {
-        padding: 15px;
-    }
-
-    .btn-custom {
-        background-color: #007bff;
-        color: white;
-        border-radius: 5px;
-        padding: 10px 20px;
-        transition: background-color 0.3s ease;
-    }
-
-    .btn-custom:hover {
-        background-color: #0056b3;
+        padding: 20px;
     }
 </style>
 
 <body>
+    <!-- Header Section -->
     <header>
         <h1>Welcome, {{ lecturer_name }}</h1>
         <nav>
             <ul>
-                <!-- <li><a href="{% url 'lecturedashboard' %}">Dashboard</a></li> -->
                 <li><a href="{% url 'mark_attendance' %}">Take Attendance</a></li>
                 <li><a href="{% url 'view_attendance' %}">View Attendance</a></li>
+                <li><a href="{% url 'mark' %}">Enter Marks</a></li>
                 <li><a href="{% url 'logout' %}">Logout</a></li>
             </ul>
         </nav>
     </header>
 
-    <main class="container">
-        <!-- Add New Attendance Button -->
-        <div class="text-center mt-4">
-            <a href="{% url 'mark_attendance' %}" class="btn btn-custom">Add New Attendance</a>
+    <!-- Main Content -->
+    <div class="container main-content">
+        <h2>Lecturer Dashboard</h2>
+
+        <!-- Attendance Section -->
+        <div class="card">
+            <div class="card-header">
+                Attendance Management
+            </div>
+            <div class="card-body">
+                <p>Mark and view attendance records for your students.</p>
+                <div class="text-center">
+                    <a href="{% url 'mark_attendance' %}" class="btn btn-custom">Take Attendance</a>
+                    <a href="{% url 'view_attendance' %}" class="btn btn-custom">View Attendance</a>
+                </div>
+            </div>
         </div>
-    </main>
+
+        <!-- Marks Section -->
+        <div class="card">
+            <div class="card-header">
+                Marks Management
+            </div>
+            <div class="card-body">
+                <p>Enter and review the academic performance of your students.</p>
+                <div class="text-center">
+                    <a href="{% url 'mark' %}" class="btn btn-custom">Enter Marks</a>
+                    <a href="{% url 'view_marks' %}" class="btn btn-custom">View Marks</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <!-- Bootstrap JS & Popper.js (for Bootstrap's JS plugins) -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

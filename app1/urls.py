@@ -15,6 +15,11 @@ urlpatterns=[
     path('mark_attendance/', views.mark_attendance, name='mark_attendance'),
     path('attendance_success/', views.attendance_success, name='attendance_success'),
     path('view_attendance/', views.view_attendance, name='view_attendance'),
+    path('marks/',views.mark,name='mark'),
+    path('mark_success/',views.mark_success,name='mark_success'),
+    path('view_marks/',views.view_marks,name='view_marks'),
+
+
 
 
 ]

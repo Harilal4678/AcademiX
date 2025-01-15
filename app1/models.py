@@ -37,4 +37,15 @@ class Attendance(models.Model):
 
     def __str__(self):
         return f"{self.student.first_name} - {self.date} - {self.status}"
+    
+class marks(models.Model):
+    student = models.ForeignKey(studentdetails, on_delete=models.CASCADE)
+    physics=models.CharField(max_length=30)
+    maths=models.CharField(max_length=30)
+    computer_science=models.CharField(max_length=30)
+    lecturer=models.ForeignKey(staff,on_delete=models.CASCADE,null=True,blank=True)
+
+    def __str__(self):
+        return f"{self.student.first_name}"
+    
    

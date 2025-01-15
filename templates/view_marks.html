@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 
-{% block title %}Attendance Records{% endblock %}
+{% block title %}Marks Records{% endblock %}
 
 {% block content %}
 {% load static %}
 
-<!-- Bootstrap CSS -->
+<!-- Bootstrap CSS (optional, can also use your local stylesheet) -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
 <!-- Custom Internal Styles -->
@@ -30,34 +30,6 @@
         margin-bottom: 30px;
         font-size: 28px;
         color: #007bff;
-    }
-
-    .filter-form {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 20px;
-    }
-
-    .filter-form input[type="date"] {
-        width: 200px;
-        padding: 8px;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-    }
-
-    .filter-form button {
-        padding: 10px 20px;
-        background-color: #007bff;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-    }
-
-    .filter-form button:hover {
-        background-color: #0056b3;
     }
 
     table {
@@ -108,56 +80,35 @@
 
 <body>
     <div class="container">
-        <h2>Attendance Records</h2>
-
-        <!-- Filter Form -->
-        <form method="GET" action="{% url 'view_attendance' %}" class="filter-form">
-            <div>
-                <label for="from_date">From:</label>
-                <input type="date" id="from_date" name="from_date" value="{{ request.GET.from_date }}">
-            </div>
-            <div>
-                <label for="to_date">To:</label>
-                <input type="date" id="to_date" name="to_date" value="{{ request.GET.to_date }}">
-            </div>
-            <div>
-                <button type="submit">Filter</button>
-            </div>
-        </form>
-
-        <!-- Attendance Table -->
+        <h2>Marks Records</h2>
+        
         <table class="table table-striped">
             <thead>
                 <tr>
                     <th>Student Name</th>
-                    <th>Date</th>
-                    <th>Status</th>
-                    <th>Teacher</th>
+                    <th>Physics</th>
+                    <th>Maths</th>
+                    <th>Computer Science</th>
                 </tr>
             </thead>
             <tbody>
-                {% for record in attendance %}
+                {% for record in mark %}
                 <tr>
                     <td>{{ record.student.first_name }} {{ record.student.last_name }}</td>
-                    <td>{{ record.date }}</td>
-                    <td>{{ record.status }}</td>
-                    <td>{{ record.lecturer }}</td>
-                </tr>
-                {% empty %}
-                <tr>
-                    <td colspan="4" class="text-center">No records found for the selected date range.</td>
+                    <td>{{ record.physics }}</td>
+                    <td>{{ record.maths }}</td>
+                    <td>{{ record.computer_science }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
 
-        <!-- Back Button -->
         <div class="text-center mt-4">
             <a href="{% url 'lecturedashboard' %}" class="btn-custom">Back to Dashboard</a>
         </div>
     </div>
 
-    <!-- Bootstrap JS -->
+    <!-- Bootstrap JS & Popper.js (for Bootstrap's JS plugins) -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
