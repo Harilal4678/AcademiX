@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+
+{% block title %}Student View Marks{% endblock %}
+
+{% block content %}
+
+{% load static %}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #444;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            text-align: center;
+            padding: 12px;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background: #6a11cb;
+            color: #fff;
+            font-size: 18px;
+        }
+
+        tr:nth-child(even) {
+            background: #f2f2f2;
+        }
+
+        tr:hover {
+            background: #d3e0ff;
+        }
+
+        td {
+            font-size: 16px;
+            color: #555;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            table {
+                font-size: 14px;
+            }
+
+            th, td {
+                padding: 8px;
+            }
+        }
+    </style>
+    <div class="container">
+        <h1>Student Marks with Grades</h1>
+        <table>
+            <tr>
+                <th>Exam</th>
+                <th>Physics</th>
+                <th>Grade</th>
+                <th>Computer Science</th>
+                <th>Grade</th>
+                <th>Maths</th>
+                <th>Grade</th>
+            </tr>
+            {% for mark in marks %}
+            <tr>
+                <td>{{ mark.exam_type }}</td>
+                <td>{{ mark.physics }}</td>
+                <td>
+                    {% if mark.physics > 90 %}
+                        A+
+                    {% elif mark.physics > 80 %}
+                        A
+                    {% elif mark.physics > 70 %}
+                        B
+                    {% elif mark.physics > 60 %}
+                        C
+                    {% elif mark.physics > 50 %}
+                        D
+                    {% elif mark.physics >= 40 %}
+                        E
+                    {% else %}
+                        F
+                    {% endif %}
+                </td>
+                <td>{{ mark.computer_science }}</td>
+                <td>
+                    {% if mark.computer_science > 90 %}
+                        A+
+                    {% elif mark.computer_science > 80 %}
+                        A
+                    {% elif mark.computer_science > 70 %}
+                        B
+                    {% elif mark.computer_science > 60 %}
+                        C
+                    {% elif mark.computer_science > 50 %}
+                        D
+                    {% elif mark.computer_science >= 40 %}
+                        E
+                    {% else %}
+                        F
+                    {% endif %}
+                </td>
+                
+                <td>{{ mark.maths }}</td>
+                <td>
+                    {% if mark.maths > 90 %}
+                        A+
+                    {% elif mark.maths > 80 %}
+                        A
+                    {% elif mark.maths > 70 %}
+                        B
+                    {% elif mark.maths > 60 %}
+                        C
+                    {% elif mark.maths > 50 %}
+                        D 
+                    {% elif mark.maths >= 40 %}
+                        E
+                    {% else %}
+                        F
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</body>
+{% endblock %}

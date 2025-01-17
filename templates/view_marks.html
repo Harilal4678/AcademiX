@@ -5,7 +5,7 @@
 {% block content %}
 {% load static %}
 
-<!-- Bootstrap CSS (optional, can also use your local stylesheet) -->
+<!-- Bootstrap CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
 <!-- Custom Internal Styles -->
@@ -20,16 +20,18 @@
         max-width: 900px;
         margin: 0 auto;
         background-color: #ffffff;
-        border-radius: 8px;
+        border-radius: 12px;
         padding: 30px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        animation: fadeIn 1s ease-in-out;
     }
 
     h2 {
         text-align: center;
         margin-bottom: 30px;
-        font-size: 28px;
-        color: #007bff;
+        font-size: 30px;
+        color: #4A90E2;
+        font-weight: bold;
     }
 
     table {
@@ -38,13 +40,13 @@
     }
 
     th, td {
-        padding: 12px;
+        padding: 15px;
         text-align: left;
         border-bottom: 1px solid #ddd;
     }
 
     th {
-        background-color: #007bff;
+        background-color: #4A90E2;
         color: white;
         font-size: 18px;
     }
@@ -58,61 +60,77 @@
     }
 
     tr:hover td {
-        background-color: #e2e6ea;
+        background-color: #DDE6F1;
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
     }
 
     .btn-custom {
-        background-color: #007bff;
+        background-color: #4A90E2;
         color: white;
-        padding: 10px 20px;
-        border-radius: 5px;
+        padding: 12px 25px;
+        border-radius: 25px;
         font-size: 16px;
         text-align: center;
         display: inline-block;
         text-decoration: none;
-        transition: background-color 0.3s ease;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
     }
 
     .btn-custom:hover {
-        background-color: #0056b3;
+        background-color: #357ABD;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .table-container {
+        overflow-x: auto;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
 </style>
 
 <body>
     <div class="container">
         <h2>Marks Records</h2>
-        
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Student Name</th>
-                    <th>Physics</th>
-                    <th>Maths</th>
-                    <th>Computer Science</th>
-                    <th>Exam_type</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for record in mark %}
-                <tr>
-                    <td>{{ record.student.first_name }} {{ record.student.last_name }}</td>
-                    <td>{{ record.physics }}</td>
-                    <td>{{ record.maths }}</td>
-                    <td>{{ record.computer_science }}</td>
-                    <td>{{record.exam_type}}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+        <div class="table-container">
+            <table class="table table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th>Student Name</th>
+                        <th>Physics</th>
+                        <th>Maths</th>
+                        <th>Computer Science</th>
+                        <th>Exam Type</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for record in mark %}
+                    <tr>
+                        <td>{{ record.student.first_name }} {{ record.student.last_name }}</td>
+                        <td>{{ record.physics }}</td>
+                        <td>{{ record.maths }}</td>
+                        <td>{{ record.computer_science }}</td>
+                        <td>{{ record.exam_type }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
 
         <div class="text-center mt-4">
             <a href="{% url 'lecturedashboard' %}" class="btn-custom">Back to Dashboard</a>
         </div>
     </div>
 
-    <!-- Bootstrap JS & Popper.js (for Bootstrap's JS plugins) -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 {% endblock %}

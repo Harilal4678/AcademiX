@@ -1,125 +1,138 @@
-
 {% extends 'base.html' %}
 {% load static %}
-
 
 {% block title %}Home{% endblock %}
 
 {% block content %}
 
+<style>
+    /* General Styling */
+    body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f7fa;
+        color: #333;
+    }
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f9f9f9;
-        }
+    header {
+        background-color: #007BFF;
+        color: white;
+        padding: 15px 0;
+        text-align: center;
+        font-size: 24px;
+        font-weight: 600;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
 
-        header {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            text-align: center;
-        }
+    nav {
+        display: flex;
+        justify-content: space-around;
+        background-color: #333;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
 
+    nav a {
+        color: white;
+        text-decoration: none;
+        padding: 18px 30px;
+        text-align: center;
+        display: block;
+        font-size: 16px;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    nav a:hover {
+        background-color: #4CAF50;
+        transform: scale(1.05);
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 50px auto;
+        padding: 20px;
+    }
+
+    .card {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        margin: 20px 0;
+        padding: 30px;
+        text-align: center;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card h3 {
+        margin: 15px 0;
+        font-size: 22px;
+        color: #007BFF;
+    }
+
+    .card p {
+        font-size: 16px;
+        color: #666;
+    }
+
+    .card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+    }
+
+    @media (max-width: 768px) {
         nav {
-            display: flex;
-            justify-content: space-around;
-            background-color: #333;
+            flex-direction: column;
         }
 
         nav a {
-            color: white;
-            text-decoration: none;
-            padding: 14px 20px;
-            text-align: center;
-            display: block;
-        }
-
-        nav a:hover {
-            background-color: #575757;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: auto;
-            padding: 20px;
+            padding: 12px;
+            font-size: 14px;
         }
 
         .card {
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            margin: 20px 0;
-            padding: 20px;
-            text-align: center;
-        }
-
-        .card h3 {
             margin: 10px 0;
+            padding: 20px;
         }
+    }
 
-        footer {
-            text-align: center;
-            padding: 10px;
-            background-color: #4CAF50;
-            color: white;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
+</style>
 
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            nav {
-                flex-direction: column;
-            }
+<header>
+    Student Dashboard
+</header>
 
-            nav a {
-                padding: 10px;
-            }
+<nav>
+    <a href="{% url 'student_profile'%}">Profile</a>
+    <a href="#">Grades</a>
+    <a href="#">Assignments</a>
+    <a href="#">Fee Details</a>
+    <a href="{% url 'notifications' %}">Announcements</a>
+    <a href="{% url 'logout' %}">LOG Out</a>
+</nav>
 
-            .card {
-                margin: 10px 0;
-                padding: 15px;
-            }
-        }
-    </style>
-
-    <nav>
-        <a href="{% url 'student_profile'%}">Profile</a>
-        <a href="#">Grades</a>
-        <a href="#">Assignments</a>
-        <a href="#">Fee Details</a>
-        <a href="#">Announcements</a>
-        <a href="{% url 'logout' %}">LOG out</a>
-    </nav>
-    <main class="container">
-        <div class="card">
-            <h3>Your Profile</h3>
-            <p>View and edit your personal information.</p>
-        </div>
-        <div class="card">
-            <h3>Grades</h3>
-            <p>Check your academic performance.</p>
-        </div>
-        <div class="card">
-            <h3>Assignments</h3>
-            <p>Access your assignments and submission deadlines.</p>
-        </div>
-        <div class="card">
-            <h3>Fee Details</h3>
-            <p>View your fee status and payment history.</p>
-        </div>
-        <div class="card">
-            <h3>Announcements</h3>
-            <p>Stay updated with the latest news and notifications.</p>
-        </div>
-    </main>
-
+<main class="container">
+    <div class="card">
+        <h3>Your Profile</h3>
+        <p>View and edit your personal information.</p>
+    </div>
+    <div class="card">
+        <h3>Grades</h3><a style="text-decoration: none;"  href="{% url 'student_view_marks' %}">
+        <p>Check your academic performance.</p></a>
+    </div>
+    <div class="card">
+        <h3>Assignments</h3>
+        <p>Access your assignments and submission deadlines.</p>
+    </div>
+    <div class="card">
+        <h3>Fee Details</h3>
+        <p>View your fee status and payment history.</p>
+    </div>
+    <div class="card">
+        <h3>Announcements</h3>
+        <p>Stay updated with the latest news and notifications.</p>
+    </div>
+</main>
 
 
 
 {% endblock %}
-

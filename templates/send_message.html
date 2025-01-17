@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block title %}home{% endblock %}
+
+{% block content %}
+
+{% load static %}
+
+<form method="POST" class="notification-form">
+    {% csrf_token %}
+    
+    <label for="message" class="form-label">Message:</label>
+    <textarea name="message" id="message" rows="4" class="form-input" required></textarea>
+    
+    <label for="recipient" class="form-label">Send To:</label>
+    <select name="recipient" id="recipient" class="form-input" required>
+        <option value="student">Students</option>
+        <option value="lab_assistants">Lab Assistants</option>
+        <option value="lecturers">Lecturers</option>
+        <option value="all">All</option>
+    </select>
+
+    <button type="submit" class="submit-button">Send</button>
+</form>
+
+<style>
+    .notification-form {
+        background-color: #f9fafb;
+        border-radius: 10px;
+        padding: 30px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        max-width: 600px;
+        margin: 30px auto;
+        font-family: 'Arial', sans-serif;
+    }
+
+    .form-label {
+        font-size: 18px;
+        font-weight: bold;
+        color: #2c3e50;
+        margin-bottom: 10px;
+        display: block;
+    }
+
+    .form-input {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 20px;
+        border: 2px solid #ccc;
+        border-radius: 8px;
+        font-size: 16px;
+        color: #333;
+        background-color: #f1f1f1;
+        transition: all 0.3s ease;
+    }
+
+    .form-input:focus {
+        border-color: #3498db;
+        background-color: #fff;
+        outline: none;
+    }
+
+    .submit-button {
+        background-color: #3498db;
+        color: white;
+        font-size: 18px;
+        padding: 12px 25px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        display: block;
+        width: 100%;
+    }
+
+    .submit-button:hover {
+        background-color: #2980b9;
+    }
+
+    select.form-input {
+        background-color: #f1f1f1;
+        color: #333;
+    }
+
+    select.form-input:focus {
+        border-color: #3498db;
+        background-color: #fff;
+        outline: none;
+    }
+
+    @media (max-width: 600px) {
+        .notification-form {
+            padding: 20px;
+        }
+    }
+</style>
+
+
+{% endblock %}

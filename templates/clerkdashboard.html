@@ -17,7 +17,7 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background: url("{% static 'images/dark-background-abstract-with-light-effect-vector.jpg' %}") no-repeat center center fixed;
+            background: url("{% static 'images/clerkdashboard.jpg' %}") no-repeat center center fixed;
             background-size: cover;
             color: #fff;
         }
@@ -105,8 +105,10 @@
         <div class="card">
             <h3>Check Staff</h3>
             <p>Access details of all college staff.</p>
-            <button onclick="location.href='#'">View Staff</button>
+            <a href="{% url 'send_message' %}">
+            <button>send notification</button></a>
         </div>
     </div>
+   
 
 {% endblock %}

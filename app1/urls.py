@@ -18,6 +18,9 @@ urlpatterns=[
     path('marks/',views.mark,name='mark'),
     path('mark_success/',views.mark_success,name='mark_success'),
     path('view_marks/',views.view_marks,name='view_marks'),
+    path('send_message/', views.send_message, name='send_message'),
+    path('notifications/', views.notifications, name='notifications'),
+    path('view_student_marks',views.student_view_marks,name='student_view_marks'),
 
 
 

@@ -240,5 +240,79 @@ def view_marks(request):
 
     
     return render(request,'view_marks.html',{'mark':mark})
+
+
+
+
+def send_message(request):
+    if request.method == 'POST':
+        message = request.POST.get('message')
+        recipient_type = request.POST.get('recipient')  # student, staff, or department-specific
+        sender = staff.objects.get(id=request.session.get('stid'))  # Current clerk
+
+        if recipient_type == 'student':
+            # Notify all students
+            students = studentdetails.objects.all()
+            for student in students:
+                Notification.objects.create(sender=sender, recipient='student', message=message)
+
+        elif recipient_type == 'lab_assistants':
+            # Notify all Lab Assistants
+            lab_assistants = staff.objects.filter(department='Lab Assistant')
+            for assistant in lab_assistants:
+                Notification.objects.create(sender=sender, recipient='staff', message=message)
+
+        elif recipient_type == 'lecturers':
+            # Notify all Lecturers
+            lecturers = staff.objects.filter(department='Lecturer')
+            for lecturer in lecturers:
+                Notification.objects.create(sender=sender, recipient='staff', message=message)
+
+        elif recipient_type == 'clerks':
+            # Notify all Clerks
+            clerks = staff.objects.filter(department='Clerk')
+            for clerk in clerks:
+                Notification.objects.create(sender=sender, recipient='staff', message=message)
+
+        elif recipient_type == 'all':
+            # Notify all students and staff
+            students = studentdetails.objects.all()
+            staffs = staff.objects.all()
+            for student in students:
+                Notification.objects.create(sender=sender, recipient='student', message=message)
+            for staff_member in staffs:
+                Notification.objects.create(sender=sender, recipient='staff', message=message)
+
+        return redirect('clerkdashboard')  # Redirect to the clerk dashboard after sending the message
+
+    return render(request, 'send_message.html')
+
+
+
+
+def notifications(request):
+    user_type = None
+    notifications = []
+
+    if 'sid' in request.session:  # Student
+        user_type = 'student'
+    elif 'stid' in request.session:  # Staff
+        user_type = 'staff'
+
+    if user_type:
+        notifications = Notification.objects.filter(recipient=user_type).order_by('-timestamp')
+
+    return render(request, 'notifications.html', {'notifications': notifications})
+
+
+def student_view_marks(request):
+    student_id=request.session.get('sid')
+    if not student_id:
+        return render(request,'error.html')
+    student=studentdetails.objects.get(id=student_id)
+    student_marks=marks.objects.filter(student=student)
+    return render(request,'student_view_marks.html',{'marks':student_marks})
+
+
     
 
