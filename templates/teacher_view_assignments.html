@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}my profile{% endblock %}
+
+{% block content %}
+
+{% load static %}
+
+
+
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Assignments Assigned</h2>
+    <table class="table table-striped table-bordered text-center" id="mytable">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">student</th>
+                <th scope="col">title</th>
+                <th scope="col">description</th>
+                <th scope="col">due date</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+           {% for res in res %}
+            <tr>
+            <td>{{res.student}}</td>
+            <td>{{res.title}}</td>
+            <td>{{res.description}}</td>
+            <td>{{res.due_date}}</td>
+            <td><a href="{% url 'view_Assignment_reply' id=res.id %}">click to view</a></td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+
+
+{% endblock %} 

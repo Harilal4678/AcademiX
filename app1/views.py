@@ -1,7 +1,9 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect, get_object_or_404
+from django.http import HttpResponse
 from django.core.files.storage import FileSystemStorage
 from . models import *
 from django.utils import timezone
+from django.utils.timezone import now
 
 # Create your views here.
 def index(request):
@@ -80,7 +82,13 @@ def login(request):
              return render(request,'index.html',{'status':'invalid email or password'})
             
 def landingpage(request):
-    return render(request,'landingpage.html')
+    student_id=request.session.get('sid')
+    assignments=Assignments.objects.filter(id=student_id)
+
+    context = {
+        'assignment': assignments.first() if assignments.exists() else None,  # Get the first assignment or None
+    }
+    return render(request, 'landingpage.html', context)
 
 def student_profile(request):
      user_id=request.session.get('sid')
@@ -313,6 +321,101 @@ def student_view_marks(request):
     student_marks=marks.objects.filter(student=student)
     return render(request,'student_view_marks.html',{'marks':student_marks})
 
+def send_assignment(request):
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        description = request.POST.get('description')
+        student_id = request.POST.get('student')
+        due_date = request.POST.get('due_date')
 
-    
+        # Get the logged-in teacher (staff with lecturer department) and selected student
+        teacher = staff.objects.get(id=request.session['stid'])  # Assumes staff is logged in
+        if teacher.department != 'lecturer':  # Check if the staff belongs to the lecturer department
+            return redirect('home')  # Or handle with an appropriate response
+
+        student = studentdetails.objects.get(id=student_id)
+
+        # Create a new assignment
+        Assignments.objects.create(
+            teacher=teacher,
+            student=student,
+            title=title,
+            description=description,
+            due_date=due_date,
+            created_at=timezone.now(),  # Using timezone.now()
+        )
+        return redirect('lecturedashboard')  # Redirect after successful submission
+
+    students = studentdetails.objects.all()
+    context = {
+        'students': students,
+        'created_at': timezone.now(),  # Using timezone.now()
+    }
+    return render(request, 'send_assignment.html', context)
+
+
+def view_assignment(request):
+    tem=request.session.get('sid')
+    student=studentdetails.objects.get(id=tem)
+    assignment=Assignments.objects.get(student=student)
+
+    return render(request,'view_assignment.html',{'assignment':assignment})
+
+def submit_assignment(request,id):
+    tem=request.session['sid']
+    vpro=studentdetails.objects.get(id=tem)
+    xpro=Assignments.objects.get(id=id)
+    return render(request,'submit_assignment.html',{'result':vpro, 'res':xpro})
+
+def Assignment_reply_save(request,id):
+    tem=request.session['sid']
+    if request.method =='POST':
+        Assignment_instance=Assignments.objects.get(id=id)
+        student_instance=studentdetails.objects.get(id=tem)
+        content=request.POST.get('content')
+        
+        file = request.FILES.get('file') 
+        fs = FileSystemStorage()
+        image_path = fs.save(file.name, file)
+
+
+        # message_save = AssignmentAnswers(assignment=Assignment_instance,student=student_instance,text_answer=content,file_answer=file)
+        # message_save.save()
+
+        answer,created=AssignmentAnswers.objects.update_or_create(
+            assignment=Assignment_instance,
+            student=student_instance,
+            defaults={
+                'text_answer':content,
+                'file_answer':file
+
+            }
+
+
+        )
+        if created:
+            return render(request,'assignment_success.html',{'result':'created_new'})
+        else:
+            return render(request,'assignment_success.html',{'result':'update_existing'})
+    return render(request,'assignment_success.html')
+
+def teacher_view_assignments(request):
+    teacher=request.session.get('stid')
+    assignment=Assignments.objects.filter(teacher=teacher)
+    return render(request,'teacher_view_assignments.html',{'res':assignment})
+
+def view_Assignment_reply(request,id):
+    try:
+        assignment_answer=AssignmentAnswers.objects.get(assignment=id) #yes we actually need get instead of filter but for me in the template there is condition checking so get returns error if nothing to fetch but filter returns none so i can do if condition and show nothing if nothing to show instead of error
+    except AssignmentAnswers.DoesNotExist:
+        assignment_answer=None
+    return render(request,'view_Assignment_reply.html',{'result':assignment_answer})
+
+
+
+
+
+
+
+
 

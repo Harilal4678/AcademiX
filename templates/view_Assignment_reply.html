@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+
+{% block title %} View assignment {% endblock %}
+
+{% block content %}
+
+{% load static %}
+
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f4f6f9;
+        margin: 0;
+        padding: 0;
+    }
+
+    .homework-container {
+        width: 100%;
+        max-width: 900px;
+        margin: 30px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .page-title {
+        text-align: center;
+        color: #333;
+        margin-bottom: 20px;
+        font-size: 24px;
+    }
+
+    .homework-details {
+        margin-bottom: 30px;
+    }
+
+    .replies {
+        margin-top: 20px;
+    }
+
+    .reply-card {
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 10px;
+        background-color: #f9f9f9;
+    }
+
+    .reply-header {
+        font-weight: 600;
+        margin-bottom: 10px;
+        color: #007bff;
+    }
+
+    .reply-content {
+        margin-bottom: 10px;
+        color: #333;
+    }
+
+    a {
+        color: #007bff;
+        text-decoration: underline;
+    }
+
+    a:hover {
+        text-decoration: none;
+    }
+</style>
+
+<div class="homework-container">
+    {% if result %}
+        <h1 class="page-title">Assignment Details</h1>
+
+        <!-- Homework Details Section -->
+        <div class="homework-details">
+            <p><strong>Description:</strong> {{ result.assignment.description }}</p>
+            <p><strong>Last Submission Date:</strong> {{ result.assignment.due_date }}</p>
+        </div>
+
+        <!-- Student Replies Section -->
+        <div class="replies">
+            <h3>Student Replies</h3>
+            <div class="reply-card">
+                <p class="reply-header">Reply by: {{ result.student}}</p>
+                <p class="reply-content"><strong>Content:</strong> {{ result.text_answer }}</p>
+                <p><strong>File:</strong> 
+                    {% if result.file_answer %}
+                    <p><strong></strong> <a href="{{ result.file_answer.url }}" target="_blank">View File</a></p>
+                {% else %}
+                    <p>No file uploaded.</p>
+                {% endif %}
+                    
+                </p>
+            </div>
+        </div>
+    {% else %}
+        <h1 class="page-title">No Homework Details Found</h1>
+    {% endif %}
+</div>
+
+{% endblock %}

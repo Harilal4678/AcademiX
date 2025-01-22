@@ -1,4 +1,6 @@
 from django.urls import path,include
+from django.conf.urls.static import static
+from django.conf import settings
 from . import views
 urlpatterns=[
     path('',views.index,name='index'),
@@ -21,8 +23,18 @@ urlpatterns=[
     path('send_message/', views.send_message, name='send_message'),
     path('notifications/', views.notifications, name='notifications'),
     path('view_student_marks',views.student_view_marks,name='student_view_marks'),
+    path('send_assignment/', views.send_assignment, name='send_assignment'),
+    path('view_assignment',views.view_assignment,name='view_assignment'),
+    path('submit_assignment/<int:id>',views.submit_assignment,name='submit_assignment'),
+    path('submit_assignment/Assignment_reply_save/<int:id>',views.Assignment_reply_save,name=' Assignment_reply_save'),
+    path('teacher_view_assignments',views.teacher_view_assignments,name='teacher_view_assignments'),
+    path('view_Assignment_reply/<int:id>',views.view_Assignment_reply,name='view_Assignment_reply'),
+
 
 
 
 
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

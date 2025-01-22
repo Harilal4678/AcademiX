@@ -51,9 +51,9 @@ class Attendance(models.Model):
     
 class marks(models.Model):
     student = models.ForeignKey(studentdetails, on_delete=models.CASCADE)
-    physics=models.IntegerField(max_length=30)
-    maths=models.IntegerField(max_length=30)
-    computer_science=models.IntegerField(max_length=30)
+    physics=models.IntegerField()
+    maths=models.IntegerField()
+    computer_science=models.IntegerField()
     lecturer=models.ForeignKey(staff,on_delete=models.CASCADE,null=True,blank=True)
     exam_type=models.CharField(max_length=30,default='quarterly')
 
@@ -71,6 +71,29 @@ class Notification(models.Model):
 
     def __str__(self):
         return f"From {self.sender.fullname} to {self.recipient}: {self.message}"
+    
+class Assignments(models.Model):
+    teacher=models.ForeignKey(staff,on_delete=models.CASCADE)
+    student=models.ForeignKey(studentdetails,on_delete=models.CASCADE)
+    title=models.CharField(max_length=30)
+    description=models.CharField(max_length=30)
+    due_date=models.CharField(max_length=30)
+    created_at=models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
+    
+class AssignmentAnswers(models.Model):
+    assignment = models.ForeignKey(Assignments, on_delete=models.CASCADE, related_name='answers')
+    student = models.ForeignKey(studentdetails, on_delete=models.CASCADE)  # Linking to the student
+    text_answer = models.TextField(blank=True, null=True)  # For text input
+    file_answer = models.FileField(upload_to='assignment_answers/', blank=True, null=True)  # For file input
+    submitted_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Answer by {self.student} for {self.assignment.title}"
+
 
     
+   
    

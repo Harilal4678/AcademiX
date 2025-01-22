@@ -1,0 +1,169 @@
+{% extends 'base.html' %}
+
+{% block title %}Homework Reply{% endblock %}
+
+{% block content %}
+{% load static %}
+
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Roboto:wght@300;500&display=swap" rel="stylesheet">
+
+<!-- Styling Section -->
+<style>
+    /* Overall page styling */
+    body {
+        font-family: 'Poppins', sans-serif;
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(to bottom right, #e0f7fa, #ffffff);
+    }
+
+    .reply-container {
+        width: 100%;
+        max-width: 700px;
+        margin: 50px auto;
+        padding: 30px;
+        background: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        animation: fadeIn 0.5s ease-in-out;
+    }
+
+    .page-title {
+        text-align: center;
+        color: #00796b;
+        font-size: 28px;
+        font-weight: 600;
+        margin-bottom: 20px;
+    }
+
+    p {
+        font-size: 16px;
+        color: #555;
+        margin: 10px 0;
+        font-family: 'Roboto', sans-serif;
+    }
+
+    /* Form styling */
+    .homework-form {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+    }
+
+    label {
+        font-weight: 600;
+        font-size: 14px;
+        margin-bottom: 8px;
+        color: #333;
+    }
+
+    textarea, input[type="file"] {
+        padding: 15px;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        font-size: 16px;
+        font-family: 'Roboto', sans-serif;
+        transition: border-color 0.3s ease;
+    }
+
+    textarea {
+        resize: vertical;
+    }
+
+    input[type="file"] {
+        font-size: 14px;
+    }
+
+    textarea:focus, input[type="file"]:focus {
+        border-color: #00796b;
+        outline: none;
+    }
+
+    /* Button styling */
+    .submit-btn {
+        padding: 15px;
+        background: linear-gradient(to right, #00796b, #004d40);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        text-transform: uppercase;
+        font-family: 'Poppins', sans-serif;
+        transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    .submit-btn:hover {
+        background: linear-gradient(to right, #004d40, #00796b);
+        transform: scale(1.05);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .reply-container {
+            width: 90%;
+            padding: 20px;
+        }
+
+        .page-title {
+            font-size: 24px;
+        }
+
+        textarea {
+            font-size: 14px;
+        }
+
+        .submit-btn {
+            font-size: 14px;
+        }
+    }
+
+    /* Fade-in animation */
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
+
+<!-- Main Container Section -->
+<div class="reply-container">
+    <h1 class="page-title">Submit Assignment Reply</h1>
+
+    <!-- Form Section -->
+    <form method="POST" action="Assignment_reply_save/{{ res.id }}" enctype="multipart/form-data" class="homework-form">
+        {% csrf_token %}
+
+        <!-- Assignment Details Section -->
+        <p><strong>Question:</strong> {{ res.description }}</p>
+        <p><strong>Teacher:</strong> {{ res.teacher }}</p>
+
+        <!-- Text Reply Section -->
+        <div class="form-group">
+            <label for="content">Reply Content:</label>
+            <textarea id="content" name="content" rows="6" placeholder="Write your reply here..." required></textarea>
+        </div>
+
+        <!-- File Upload Section -->
+        <div class="form-group">
+            <label for="file">Attach File (Optional):</label>
+            <input type="file" id="file" name="file">
+        </div>
+
+        <!-- Submission Button Section -->
+        <button type="submit" class="submit-btn">Submit Reply</button>
+    </form>
+</div>
+{% endblock %}

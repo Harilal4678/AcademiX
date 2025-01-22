@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+
+{% block title %}Assignment Success{% endblock %}
+
+{% block content %}
+{% load static %}
+
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Roboto:wght@300;500&display=swap" rel="stylesheet">
+
+<!-- Styling Section -->
+<style>
+    /* Overall Page Styling */
+    body {
+        font-family: 'Poppins', sans-serif;
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(to bottom right, #e3f2fd, #ffffff);
+    }
+
+    .success-container {
+        text-align: center;
+        max-width: 600px;
+        margin: 100px auto;
+        padding: 30px;
+        background: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        animation: fadeIn 0.5s ease-in-out;
+    }
+
+    h1 {
+        font-size: 28px;
+        color: #2e7d32;
+        margin-bottom: 20px;
+    }
+
+    p {
+        font-size: 16px;
+        color: #555;
+        margin-bottom: 30px;
+        font-family: 'Roboto', sans-serif;
+    }
+
+    /* Button Styling */
+    .btn-container {
+        display: flex;
+        justify-content: center;
+    }
+
+    .back-btn {
+        padding: 12px 20px;
+        background: linear-gradient(to right, #64b5f6, #42a5f5);
+        color: white;
+        text-decoration: none;
+        font-size: 16px;
+        font-weight: 600;
+        border-radius: 8px;
+        font-family: 'Poppins', sans-serif;
+        transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    .back-btn:hover {
+        background: linear-gradient(to right, #42a5f5, #1e88e5);
+        transform: scale(1.05);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .success-container {
+            width: 90%;
+            margin: 20px auto;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 24px;
+        }
+
+        .back-btn {
+            font-size: 14px;
+            padding: 10px 18px;
+        }
+    }
+
+    /* Fade-in animation */
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
+
+{% if result == 'created_new' %}
+
+<!-- Main Content Section -->
+<div class="success-container">
+    <h1>Assignment Submitted Successfully!</h1>
+    <p>Your assignment reply has been submitted. Thank you for your effort!</p>
+
+    <!-- Back to Home Button -->
+    <div class="btn-container">
+        <a href="{% url 'landingpage' %}" class="back-btn">Back to Home</a>
+    </div>
+
+{% elif result == 'update_existing' %}
+
+<div class="success-container">
+    <h1>Assignment updated Successfully!</h1>
+    <p>Your assignment reply has been updated. Thank you for your effort!</p>
+
+    <!-- Back to Home Button -->
+    <div class="btn-container">
+        <a href="{% url 'landingpage' %}" class="back-btn">Back to Home</a>
+</div>
+{% else %}
+    <p>error in submitting</p>
+{% endif %}
+{% endblock %}
+
