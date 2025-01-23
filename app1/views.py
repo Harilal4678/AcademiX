@@ -83,12 +83,12 @@ def login(request):
             
 def landingpage(request):
     student_id=request.session.get('sid')
-    assignments=Assignments.objects.filter(id=student_id)
+    # assignments=Assignments.objects.filter(id=student_id)
 
-    context = {
-        'assignment': assignments.first() if assignments.exists() else None,  # Get the first assignment or None
-    }
-    return render(request, 'landingpage.html', context)
+    # context = {
+    #     'assignment': assignments.first() if assignments.exists() else None,  # Get the first assignment or None
+    # }
+    return render(request, 'landingpage.html')
 
 def student_profile(request):
      user_id=request.session.get('sid')
@@ -414,7 +414,19 @@ def view_Assignment_reply(request,id):
 
 
 
+def staff_details_view(request):
+    result=staff.objects.all()
+    return render(request,'staff_details_view.html',{'result':result})
 
+def lecture_profile(request):
+    lecture_id=request.session.get('stid')
+    lecture_details=staff.objects.get(id=lecture_id)
+    return render(request,'lecture_profile.html',{'result':lecture_details})
+
+def clerk_profile(request):
+    clerk_id=request.session.get('stid')
+    clerk_details=staff.objects.get(id=clerk_id)
+    return render(request,'clerk_profile.html',{'result':clerk_details})
 
 
 

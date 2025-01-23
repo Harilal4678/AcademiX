@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Home{% endblock %}
+{% block title %}Student Dashboard{% endblock %}
 
 {% block content %}
 
@@ -15,125 +15,155 @@
         color: #333;
     }
 
+    /* Header with Background Image */
     header {
-        background-color: #007BFF;
+        background: url('https://source.unsplash.com/1200x400/?education,student') no-repeat center center/cover;
         color: white;
-        padding: 15px 0;
+        padding: 60px 20px;
         text-align: center;
-        font-size: 24px;
-        font-weight: 600;
+        font-size: 28px;
+        font-weight: 700;
+        position: relative;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
 
+    header::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5); /* Overlay effect */
+        z-index: 0;
+    }
+
+    header h1 {
+        position: relative;
+        z-index: 1;
+        margin: 0;
+    }
+
+    header p {
+        position: relative;
+        z-index: 1;
+        margin: 10px 0 0;
+        font-size: 16px;
+        font-weight: 400;
+    }
+
+    /* Navbar Styling */
     nav {
         display: flex;
         justify-content: space-around;
-        background-color: #333;
+        background-color: #007BFF;
+        padding: 10px 0;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     }
 
     nav a {
         color: white;
         text-decoration: none;
-        padding: 18px 30px;
-        text-align: center;
-        display: block;
         font-size: 16px;
+        padding: 8px 16px;
         transition: background-color 0.3s ease, transform 0.3s ease;
     }
 
     nav a:hover {
-        background-color: #4CAF50;
-        transform: scale(1.05);
+        background-color: #0056b3;
+        transform: scale(1.1);
     }
 
-    .container {
-        max-width: 1200px;
-        margin: 50px auto;
+    /* Body Section */
+    .tiles-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
         padding: 20px;
+        max-width: 1000px;
+        margin: 40px auto;
     }
 
-    .card {
-        background-color: white;
+    .tile {
+        background-color: #ffffff;
         border-radius: 10px;
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-        margin: 20px 0;
-        padding: 30px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 20px;
         text-align: center;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        transition: transform 0.3s, box-shadow 0.3s;
+        cursor: pointer;
     }
 
-    .card h3 {
-        margin: 15px 0;
-        font-size: 22px;
-        color: #007BFF;
-    }
-
-    .card p {
-        font-size: 16px;
-        color: #666;
-    }
-
-    .card:hover {
+    .tile:hover {
         transform: translateY(-10px);
-        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .tile h3 {
+        color: #007BFF;
+        margin: 10px 0;
+    }
+
+    .tile a {
+        color: #007BFF;
+        text-decoration: none;
+        font-size: 14px;
+        display: inline-block;
+        margin-top: 10px;
+    }
+
+    .tile a:hover {
+        text-decoration: underline;
     }
 
     @media (max-width: 768px) {
         nav {
             flex-direction: column;
+            text-align: center;
         }
 
         nav a {
-            padding: 12px;
+            padding: 10px;
             font-size: 14px;
         }
-
-        .card {
-            margin: 10px 0;
-            padding: 20px;
-        }
     }
-
 </style>
 
 <header>
-    Student Dashboard
+    <h1>Welcome to Your Dashboard</h1>
+    <p>Manage your academic and personal information seamlessly.</p>
 </header>
 
 <nav>
-    <a href="{% url 'student_profile'%}">Profile</a>
-    <a href="#">Grades</a>
-    <a href="#">Assignments</a>
+    <a href="{% url 'student_profile' %}">Profile</a>
+    <a href="{% url 'student_view_marks' %}">Grades</a>
+    <a href="{% url 'view_assignment' %}">Assignments</a>
     <a href="#">Fee Details</a>
     <a href="{% url 'notifications' %}">Announcements</a>
-    <a href="{% url 'logout' %}">LOG Out</a>
+    <a href="{% url 'logout' %}">Logout</a>
 </nav>
 
-<main class="container">
-    <div class="card">
-        <h3>Your Profile</h3>
-        <p>View and edit your personal information.</p>
+<main class="tiles-container">
+    <div class="tile">
+        <h3>View Profile</h3>
+        <a href="{% url 'student_profile' %}">Go to Profile</a>
     </div>
-    <div class="card">
-        <h3>Grades</h3><a style="text-decoration: none;"  href="{% url 'student_view_marks' %}">
-        <p>Check your academic performance.</p></a>
+    <div class="tile">
+        <h3>Check Grades</h3>
+        <a href="{% url 'student_view_marks' %}">View Grades</a>
     </div>
-    <div class="card">
-        <a href="{% url 'view_assignment' %}">
+    <div class="tile">
         <h3>Assignments</h3>
-        <p>Access your assignments and submission deadlines.</p></a>
+        <a href="{% url 'view_assignment' %}">Access Assignments</a>
     </div>
-    <div class="card">
+    <div class="tile">
         <h3>Fee Details</h3>
-        <p>View your fee status and payment history.</p>
+        <a href="#">View Fee Information</a>
     </div>
-    <div class="card">
+    <div class="tile">
         <h3>Announcements</h3>
-        <p>Stay updated with the latest news and notifications.</p>
+        <a href="{% url 'notifications' %}">Read Announcements</a>
     </div>
 </main>
-
-
 
 {% endblock %}

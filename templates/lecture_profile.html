@@ -178,7 +178,7 @@
 
     <div class="content-wrapper">
         <div class="navbar">
-            <a href="{% url 'landingpage' %}"><i class="fas fa-home"></i> Home</a>
+            <a href="{% url 'lecturedashboard' %}"><i class="fas fa-home"></i> Home</a>
             <a href="{% url 'notifications' %}" class="notification-bell">
                 <i class="fas fa-bell"></i>
                 <span class="badge">3</span> <!-- Update the number dynamically with unread notifications -->
@@ -191,31 +191,14 @@
                 <img src="{{ result.image.url }}" alt="Profile Picture">
             </div>
             <div class="profile-details">
-                <h2>{{ result.first_name }} {{ result.last_name }}</h2>
+                <p><span>Name: </span>{{ result.fullname }}</p>
                 <p><span>Gender:</span> {{ result.gender }}</p>
-                <p><span>Department:</span> {{ result.course }}</p>
+                <p><span>Profession:</span> {{ result.department }}</p>
                 <p><span>Email:</span> {{ result.email }}</p>
             </div>
         </div>
 
-        <div class="dashboard">
-            <div class="dashboard-item">
-                <i class="fas fa-graduation-cap"></i>
-                <a href="{% url 'student_view_marks' %}">Grades</a>
-            </div>
-            <div class="dashboard-item">
-                <i class="fas fa-tasks"></i>
-                <a href="{% url 'view_assignment' %}">Assignments</a>
-            </div>
-            <div class="dashboard-item">
-                <i class="fas fa-credit-card"></i>
-                <a href="#">Fee Details</a>
-            </div>
-            <div class="dashboard-item">
-                <i class="fas fa-bullhorn"></i>
-                <a href="{% url 'notifications' %}">Announcements</a>
-            </div>
-        </div>
+        
     </div>
 
 

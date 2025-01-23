@@ -86,6 +86,7 @@
 <body>
     <header>
         <h1>PRINCIPLE Dashboard</h1>
+        <a style="text-decoration: none;"  href="{% url 'clerk_profile' %}"><p style="color: #fff;"><span>Profile</span></p></a>
     </header>
     <div class="container">
         <!-- Fees Section -->
@@ -96,10 +97,10 @@
         </div>
         <!-- Attendance Section -->
         <div class="card">
-            <h3>Check Attendance</h3>
-            <p>Review attendance records of students.</p>
-            <a href="{% url 'view_attendance' %}">
-            <button>View Attendance</button></a>
+            <h3>All staffs</h3>
+            <p>Review  records of all facculity.</p>
+            <a href="{% url 'staff_details_view' %}">
+            <button>View Staff Details</button></a>
         </div>
         <!-- Staff Section -->
         <div class="card">

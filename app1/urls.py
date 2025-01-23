@@ -29,6 +29,9 @@ urlpatterns=[
     path('submit_assignment/Assignment_reply_save/<int:id>',views.Assignment_reply_save,name=' Assignment_reply_save'),
     path('teacher_view_assignments',views.teacher_view_assignments,name='teacher_view_assignments'),
     path('view_Assignment_reply/<int:id>',views.view_Assignment_reply,name='view_Assignment_reply'),
+    path('staff_details_view',views.staff_details_view,name='staff_details_view'),
+    path('lecture_profile/',views.lecture_profile,name='lecture_profile'),
+    path('clerk_profile',views.clerk_profile,name='clerk_profile')
 
 
 

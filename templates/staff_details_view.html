@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff List</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+            text-align: left;
+        }
+        tr:hover {
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <h1>Staff Details</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Full Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Gender</th>
+                <th>Department</th>
+                <th>Image</th>
+                <th>Address</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for staff in result %}
+            <tr>
+                <td>{{ staff.fullname }}</td>
+                <td>{{ staff.email }}</td>
+                <td>{{ staff.phone }}</td>
+                <td>{{ staff.gender }}</td>
+                <td>{{ staff.department }}</td>
+                <td>
+                    {% if staff.image %}
+                        <img src="{{ staff.image.url }}" alt="Staff Image" width="100" height="100">
+                    {% else %}
+                        No Image
+                    {% endif %}
+                </td>
+                <td>{{ staff.address }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
