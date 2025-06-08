@@ -39,47 +39,47 @@ def Registration(request):
 
         )
         registration.save()
+        return redirect('login')
 
-    return redirect(login)
-
+    return render(request,'Registration.html')
 
 def login(request):
-        email=request.POST.get('email')
-        password=request.POST.get('password')
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        password = request.POST.get('password')
 
-        if studentdetails.objects.filter(email=email,password=password).exists():
-            userdetails=studentdetails.objects.get(email=email, password=password)
-            if  userdetails.password==request.POST['password']:
-                request.session['sid']=userdetails.id
-                request.session['sname']=userdetails.first_name
-                request.session['password']=userdetails.password
-                request.session['email']=userdetails.email
-                request.session['gender']=userdetails.gender
-                request.session['course']=userdetails.course
-                request.session['suser']='suser'
-                
-                return render(request,'landingpage.html')
-        elif staff.objects.filter(email=email,password=password).exists():
-            userdetails=staff.objects.get(email=email, password=password)
-            if  userdetails.password==request.POST['password']:
-                request.session['stid']=userdetails.id
-                request.session['stname']=userdetails.fullname
-                request.session['password']=userdetails.password
-                request.session['email']=userdetails.email
-                request.session['gender']=userdetails.gender
-                request.session['department']=userdetails.department
-                request.session['stuser']='stuser'
+        if studentdetails.objects.filter(email=email, password=password).exists():
+            userdetails = studentdetails.objects.get(email=email, password=password)
+            request.session['sid'] = userdetails.id
+            request.session['sname'] = userdetails.first_name
+            request.session['password'] = userdetails.password
+            request.session['email'] = userdetails.email
+            request.session['gender'] = userdetails.gender
+            request.session['course'] = userdetails.course
+            request.session['suser'] = 'suser'
+            return redirect('landingpage')  # Use redirect, not render
 
-                if userdetails.department == 'clerk':
-                    return redirect('clerkdashboard')
-                elif userdetails.department == 'lecturer':
-                    return redirect('lecturedashboard')
-                else:
-                    return redirect('labassistantdashboard')
-                
-                
+        elif staff.objects.filter(email=email, password=password).exists():
+            userdetails = staff.objects.get(email=email, password=password)
+            request.session['stid'] = userdetails.id
+            request.session['stname'] = userdetails.fullname
+            request.session['password'] = userdetails.password
+            request.session['email'] = userdetails.email
+            request.session['gender'] = userdetails.gender
+            request.session['department'] = userdetails.department
+            request.session['stuser'] = 'stuser'
+
+            if userdetails.department.lower() == 'clerk':
+                return redirect('clerkdashboard')
+            elif userdetails.department.lower() == 'lecturer':
+                return redirect('lecturedashboard')
+            else:
+                return redirect('labassistantdashboard')
         else:
-             return render(request,'index.html',{'status':'invalid email or password'})
+            return render(request, 'index,html', {'status': 'Invalid email or password'})
+    else:
+        return render(request, 'index.html')  # Show the login page on GET
+
             
 def landingpage(request):
     student_id=request.session.get('sid')
@@ -132,6 +132,7 @@ def staff_registration(request):
 
         )
         registration.save()
+        return redirect('login')
 
 
 

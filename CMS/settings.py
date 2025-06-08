@@ -25,7 +25,8 @@ SECRET_KEY = 'django-insecure-8lsg^9)!7j4-^)#okdg)$i*%=(xr8!dhn)afgk@=hvqxwg-_eu
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['.onrender.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '.onrender.com']
+
 
 
 
@@ -49,6 +50,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+     'whitenoise.middleware.WhiteNoiseMiddleware',
+    
 ]
 
 ROOT_URLCONF = 'CMS.urls'
@@ -132,7 +135,12 @@ MEDIA_ROOT = BASE_DIR / 'uploads'
 
 
 
+
+
 import os
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
