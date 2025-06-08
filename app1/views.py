@@ -40,7 +40,7 @@ def Registration(request):
         )
         registration.save()
 
-    return render(request,'Registration.html')
+    return redirect(login)
 
 
 def login(request):
